@@ -89,7 +89,12 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 
 ---
 
+### **Diagram**
 
+![img.png](img.png)
+
+
+### **Resources in this repository**
 
 | File                                                 | Description                                                                               |  |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------- | - |
@@ -101,7 +106,7 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 | casc-k8s-podtemplate.yaml                            | casc config for the k8s-podtemplate                                                       |   |
 
 
-Quickstart
+### Quickstart
 
 
 * adjust the variables in `00-setupGKEFilestore.sh` then run the scriot to enable the file store CSI driver in your cluster
