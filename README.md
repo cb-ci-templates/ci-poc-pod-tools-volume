@@ -97,6 +97,8 @@ The following diagram shows the different design options:
 
 # **Resources in this repository**
 
+The code in the repository is a "proof of concept", so some areas might get improved before using it in production. (F.e, the sample volume provisioning with tools [01-installTools.sh](01-installTools.sh) should be replaced with approaches like Ansible, Terraform, or similar)
+
 | File                                                 | Description                                                                               |  |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------- | - |
 | 00-setupGKEFilestore.sh                              | create filestore in GCP                                                                   |   |
