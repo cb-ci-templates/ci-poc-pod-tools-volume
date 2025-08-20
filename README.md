@@ -72,7 +72,7 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 ---
 
 
-### **Comparison of Approaches for Managing Build Tools in Jenkins on Kubernetes**
+## **Comparison of Approaches for Managing Build Tools in Jenkins on Kubernetes**
 
 | Aspect                         | Many Pod Templates                                               | Shared Tool Volumes                                                                    | Dynamic Tool Managers (e.g., Jenkins Tool Installers, Custom Init Containers)           |
 | ------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
@@ -89,12 +89,13 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 
 ---
 
-### **Diagram**
+## **Diagram**
 
+The following diagram shows the different design options: 
 ![img.png](img.png)
 
 
-### **Resources in this repository**
+# **Resources in this repository**
 
 | File                                                 | Description                                                                               |  |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------- | - |
