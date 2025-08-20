@@ -1,11 +1,11 @@
-
+## Problem Statement
 When you use the **Jenkins Kubernetes plugin** to define many pod templates (each representing a different tool version or combination), several disadvantages and operational challenges emerge:
 
 ---
 
 ### **1. Pod Template Sprawl**
 
-* Each tool version (e.g., `maven-3.6`, `maven-3.9`, `java-11`, `java-17`) often requires its own pod template.
+* Each tool version (e.g., `maven-3.6`, `maven-3.9`, `java-17`, `java-21`) often requires its own pod template.
 * This quickly leads to **dozens of definitions**, which are difficult to manage consistently.
 * Inconsistent updates (e.g., base image changes, security patches) across all templates increase the maintenance burden.
 
