@@ -111,6 +111,6 @@ The following diagram shows the different design options:
 
 
 * adjust the variables in [00-setupGKEFilestore.sh](00-setupGKEFilestore.sh) then run the script to enable the file store CSI driver in your cluster
-* run [01-installTools.sh](01-installTools.sh)to install a tool (here jdk) on the volume
+* run [01-installTools.sh](01-installTools.sh) to install a tool (here jdk) on the volume
 * run the [Jenkinsfile-declarative-pipeline-tools-volume.groovy](Jenkinsfile-declarative-pipeline-tools-volume.groovy) on your controller
 * apply [casc-k8s-podtemplate.yaml](casc-k8s-podtemplate.yaml) on your Controller or Operations Center to test the [Jenkinsfile-scripted-pipeline-tools-volume.groovy](Jenkinsfile-scripted-pipeline-tools-volume.groovy)
