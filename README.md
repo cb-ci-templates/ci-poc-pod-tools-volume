@@ -1,4 +1,5 @@
 ## Problem Statement
+
 When you use the **Jenkins Kubernetes plugin** to define many pod templates (each representing a different tool version or combination), several disadvantages and operational challenges emerge:
 
 ---
@@ -44,8 +45,8 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 
 * Pod templates are somewhat static — if you want to combine tools dynamically (e.g., Maven + JDK + Node.js), you either:
 
-    * Predefine many combinations (combinatorial explosion), or
-    * Dynamically create pod templates in pipelines (which reduces manageability and auditability).
+  * Predefine many combinations (combinatorial explosion), or
+  * Dynamically create pod templates in pipelines (which reduces manageability and auditability).
 
 ---
 
@@ -71,46 +72,44 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 
 ---
 
-
 ## **Comparison of Approaches for Managing Build Tools in Jenkins on Kubernetes**
 
-| Aspect                         | Many Pod Templates                                               | Shared Tool Volumes                                                                    | Dynamic Tool Managers (e.g., Jenkins Tool Installers, Custom Init Containers)           |
-| ------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+
+| Aspect                         | Many Pod Templates                                                | Shared Tool Volumes                                                                     | Dynamic Tool Managers (e.g., Jenkins Tool Installers, Custom Init Containers)             |
+| ------------------------------ | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | **Setup Complexity**           | High – each tool/version requires its own pod template           | Medium – one volume to maintain, mounted into pods                                     | Medium–High – requires scripting or configuration of tool management plugins/containers |
-| **Maintainability**            | Difficult – exponential growth in pod templates for each version | Easier – centralize tools in a shared volume; updates are applied once                 | Flexible – tools can be provisioned dynamically without pod template sprawl             |
-| **Scalability**                | Poor – becomes unmanageable as tool/version matrix grows         | Good – volume can be expanded and reused across jobs                                   | Good – scales with dynamic provisioning, but may add runtime overhead                   |
-| **Version Management**         | Rigid – requires a pod template per version                      | Centralized but limited – multiple versions can coexist if volume structured carefully | Very Flexible – jobs request versions on demand                                         |
-| **Storage Requirements**       | Spread across many container images (large image registry)       | Centralized storage (NFS, PVC, hostPath, etc.)                                         | Minimal in container images; tools downloaded/cached at runtime                         |
-| **Performance**                | Good – pre-baked images start quickly                            | Good – tools available immediately if mounted                                          | Variable – first use may require download/installation, but caching mitigates           |
-| **Security & Compliance**      | Harder to audit – many images to maintain/push with patches      | Easier – update shared tool repository centrally                                       | Easier – updates controlled by tool installers or base images                           |
-| **Flexibility for Developers** | Low – developers limited to predefined pod templates             | Medium – developers can pick from shared toolset                                       | High – developers can declare tool versions as code (e.g., Jenkins tool config, CasC)   |
-| **Operational Risks**          | High – risk of outdated or unused pod templates accumulating     | Medium – volume corruption/outage affects many builds                                  | Medium – relies on network and external repositories if not cached                      |
-| **Best Use Case**              | Small, stable environments with limited tool diversity           | Medium-sized teams needing multiple tool versions centrally managed                    | Large/complex environments with frequent version changes or strict DevOps practices     |
+| **Maintainability**            | Difficult – exponential growth in pod templates for each version | Easier – centralize tools in a shared volume; updates are applied once                 | Flexible – tools can be provisioned dynamically without pod template sprawl              |
+| **Scalability**                | Poor – becomes unmanageable as tool/version matrix grows         | Good – volume can be expanded and reused across jobs                                   | Good – scales with dynamic provisioning, but may add runtime overhead                    |
+| **Version Management**         | Rigid – requires a pod template per version                      | Centralized but limited – multiple versions can coexist if volume structured carefully | Very Flexible – jobs request versions on demand                                          |
+| **Storage Requirements**       | Spread across many container images (large image registry)        | Centralized storage (NFS, PVC, hostPath, etc.)                                          | Minimal in container images; tools downloaded/cached at runtime                           |
+| **Performance**                | Good – pre-baked images start quickly                            | Good – tools available immediately if mounted                                          | Variable – first use may require download/installation, but caching mitigates            |
+| **Security & Compliance**      | Harder to audit – many images to maintain/push with patches      | Easier – update shared tool repository centrally                                       | Easier – updates controlled by tool installers or base images                            |
+| **Flexibility for Developers** | Low – developers limited to predefined pod templates             | Medium – developers can pick from shared toolset                                       | High – developers can declare tool versions as code (e.g., Jenkins tool config, CasC)    |
+| **Operational Risks**          | High – risk of outdated or unused pod templates accumulating     | Medium – volume corruption/outage affects many builds                                  | Medium – relies on network and external repositories if not cached                       |
+| **Best Use Case**              | Small, stable environments with limited tool diversity            | Medium-sized teams needing multiple tool versions centrally managed                     | Large/complex environments with frequent version changes or strict DevOps practices       |
 
 ---
 
 ## **Diagram**
 
-The following diagram shows the different design options: 
-![img.png](img.png)
 
+![img_2.png](img_2.png)
 
 # **Resources in this repository**
 
 The code in the repository is a "proof of concept", so some areas might get improved before using it in production. (F.e, the sample volume provisioning with tools [01-installTools.sh](01-installTools.sh) should be replaced with approaches like Ansible, Terraform, or similar)
 
+
 | File                                                 | Description                                                                               |  |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------- | - |
-| 00-setupGKEFilestore.sh                              | create filestore in GCP                                                                   |   |
-| 01-installTools.sh                                   | create a PVC and a tools-pod, installs java for testing purposes on the tools volume      |   |
-| tools-volume-pvc.yml                                 | k8s resource for the PVC and the POD                                                      |   |
-| Jenkinsfile-declarative-pipeline-tools-volume.groovy | Jenkins declarative Test Pipeline, uses inline pod yaml                                   |   |
-| Jenkinsfile-scripted-pipeline-tools-volume.groovy    | Jenkins scripted Test Pipeline, referncess to label, allocate a pod from k8s pod template |   |
-| casc-k8s-podtemplate.yaml                            | casc config for the k8s-podtemplate                                                       |   |
+| 00-setupGKEFilestore.sh                              | create filestore in GCP                                                                   |  |
+| 01-installTools.sh                                   | create a PVC and a tools-pod, installs java for testing purposes on the tools volume      |  |
+| tools-volume-pvc.yml                                 | k8s resource for the PVC and the POD                                                      |  |
+| Jenkinsfile-declarative-pipeline-tools-volume.groovy | Jenkins declarative Test Pipeline, uses inline pod yaml                                   |  |
+| Jenkinsfile-scripted-pipeline-tools-volume.groovy    | Jenkins scripted Test Pipeline, referncess to label, allocate a pod from k8s pod template |  |
+| casc-k8s-podtemplate.yaml                            | casc config for the k8s-podtemplate                                                       |  |
 
-
-### Quickstart
-
+# **Quickstart**
 
 * adjust the variables in [00-setupGKEFilestore.sh](00-setupGKEFilestore.sh) then run the script to enable the file store CSI driver in your cluster
 * run [01-installTools.sh](01-installTools.sh) to install a tool (here jdk) on the volume
