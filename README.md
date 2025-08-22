@@ -86,12 +86,11 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 | **Security & Compliance**      | Harder to audit – many images to maintain/push with patches      | Easier – update shared tool repository centrally                                       | Easier – updates controlled by tool installers or base images                            |
 | **Flexibility for Developers** | Low – developers limited to predefined pod templates             | Medium – developers can pick from shared toolset                                       | High – developers can declare tool versions as code (e.g., Jenkins tool config, CasC)    |
 | **Operational Risks**          | High – risk of outdated or unused pod templates accumulating     | Medium – volume corruption/outage affects many builds                                  | Medium – relies on network and external repositories if not cached                       |
-| **Best Use Case**              | Small, stable environments with limited tool diversity            | Medium-sized teams needing multiple tool versions centrally managed                     | Large/complex environments with frequent version changes or strict DevOps practices       |
+| **Best Use Case**              | Small, stable environments with limited tool diversity            | Medium-to-large sized teams needing multiple tool versions centrally managed           | Large/complex environments with frequent version changes or strict DevOps practices       |
 
 ---
 
 ## **Diagram**
-
 
 ![img_2.png](img_2.png)
 
