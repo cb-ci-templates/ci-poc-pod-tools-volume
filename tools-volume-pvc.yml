@@ -32,8 +32,8 @@ metadata:
   name: tools-pod
 spec:
   containers:
-    - name: amazonlinux
-      image: amazonlinux
+    - name: amazonlinuxtools
+      image: amazonlinux:latest
       command: ["sh", "-c", "while true; do echo hello; sleep 10; done"]
       volumeMounts:
         - mountPath: /tools
