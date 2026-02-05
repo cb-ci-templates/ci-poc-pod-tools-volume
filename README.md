@@ -74,7 +74,6 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 
 ## **Comparison of Approaches for Managing Build Tools in Jenkins on Kubernetes**
 
-
 | Aspect                         | Many Pod Templates                                                | Shared Tool Volumes                                                                     | Dynamic Tool Managers (e.g., Jenkins Tool Installers, Custom Init Containers)             |
 | ------------------------------ | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | **Setup Complexity**           | High – each tool/version requires its own pod template           | Medium – one volume to maintain, mounted into pods                                     | Medium–High – requires scripting or configuration of tool management plugins/containers |
@@ -90,14 +89,38 @@ When you use the **Jenkins Kubernetes plugin** to define many pod templates (eac
 
 ---
 
-## **Diagram**
+## **Architecture Diagram**
+
+The following diagram illustrates the **Tools Mount** approach, where a central storage volume (GKE Filestore) is used to provide build tools across multiple Jenkins agent pods.
+
+```mermaid
+graph TD
+    subgraph "Infrastructure Layer"
+        FS["GKE Filestore / NFS"] --- PV["Persistent Volume"]
+        PV --- PVC["Persistent Volume Claim: tools-pvc"]
+    end
+
+    subgraph "Management Layer"
+        AdminPod["Tools Management Pod"] -->|Read/Write Mount /tools| PVC
+        Script["01-installTools.sh"] -->|Executes in| AdminPod
+    end
+
+    subgraph "Jenkins Execution Layer"
+        Controller["Jenkins Controller"] -->|Defines Pod Template (CasC)| Agent
+        Agent["Jenkins Agent Pod"] -->|Read-Only Mount /tools| PVC
+    end
+
+    Pipeline["Jenkins Pipeline"] -->|Uses| Agent
+    Agent -->|Executes tools from| PVC
+```
+
+### Visual Representation
 
 ![img_2.png](img_2.png)
 
 # **Resources in this repository**
 
 The code in the repository is a "proof of concept", so some areas might get improved before using it in production. (F.e, the sample volume provisioning with tools [01-installTools.sh](01-installTools.sh) should be replaced with approaches like Ansible, Terraform, or similar)
-
 
 | File                                                 | Description                                                                               |  |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------- | - |
