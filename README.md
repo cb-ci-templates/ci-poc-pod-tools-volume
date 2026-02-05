@@ -106,7 +106,7 @@ graph TD
     end
 
     subgraph "Jenkins Execution Layer"
-        Controller["Jenkins Controller"] -->|Defines Pod Template (CasC)| Agent
+        Controller["Jenkins Controller"] -->|Defines Pod Template CasC| Agent
         Agent["Jenkins Agent Pod"] -->|Read-Only Mount /tools| PVC
     end
 
