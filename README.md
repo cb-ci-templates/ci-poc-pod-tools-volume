@@ -118,26 +118,25 @@ graph TD
 
 The tools volume is structured to support multiple operating systems, tool types, and versions. This allows a single mount point `/tools` to provide all necessary binaries to the agent pods.
 
-```mermaid
-mindmap
-  root((/tools))
-    linux
-      java
-        11
-        17
-        21
-      maven
-        3.8.8
-        3.9.6
-      nodejs
-        18.x
-        20.x
-    windows
-      java
-        17
-        21
-      maven
-        3.9.6
+```text
+/tools/
+├── linux/
+│   ├── java/
+│   │   ├── 11/
+│   │   ├── 17/
+│   │   └── 21/
+│   ├── maven/
+│   │   ├── 3.8.8/
+│   │   └── 3.9.6/
+│   └── nodejs/
+│       ├── 18.x/
+│       └── 20.x/
+└── windows/
+    ├── java/
+    │   ├── 17/
+    │   └── 21/
+    └── maven/
+        └── 3.9.6/
 ```
 
 # **Resources in this repository**
