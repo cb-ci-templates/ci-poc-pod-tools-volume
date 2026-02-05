@@ -114,10 +114,6 @@ graph TD
     Agent -->|Executes tools from| PVC
 ```
 
-### Visual Representation
-
-![img_2.png](img_2.png)
-
 # **Resources in this repository**
 
 The code in the repository is a "proof of concept", so some areas might get improved before using it in production. (F.e, the sample volume provisioning with tools [01-installTools.sh](01-installTools.sh) should be replaced with approaches like Ansible, Terraform, or similar)
