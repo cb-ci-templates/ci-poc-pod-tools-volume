@@ -114,6 +114,32 @@ graph TD
     Agent -->|Executes tools from| PVC
 ```
 
+## **NFS Tools Volume Directory Layout**
+
+The tools volume is structured to support multiple operating systems, tool types, and versions. This allows a single mount point `/tools` to provide all necessary binaries to the agent pods.
+
+```mermaid
+mindmap
+  root((/tools))
+    linux
+      java
+        11
+        17
+        21
+      maven
+        3.8.8
+        3.9.6
+      nodejs
+        18.x
+        20.x
+    windows
+      java
+        17
+        21
+      maven
+        3.9.6
+```
+
 # **Resources in this repository**
 
 The code in the repository is a "proof of concept", so some areas might get improved before using it in production. (F.e, the sample volume provisioning with tools [01-installTools.sh](01-installTools.sh) should be replaced with approaches like Ansible, Terraform, or similar)
